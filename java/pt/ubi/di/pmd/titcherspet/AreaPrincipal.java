@@ -2,6 +2,7 @@ package pt.ubi.di.pmd.titcherspet;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -42,6 +43,7 @@ public class AreaPrincipal extends Activity {
     private TextView linear4_texto2;
     private TextView informacao;
     private ConstraintLayout layout_principal;
+    private Context contexto = this;
     private LinearLayout linha_tempo;
     private TextView falha;
     private GetData dados;
@@ -50,11 +52,16 @@ public class AreaPrincipal extends Activity {
     private SharedPreferences pref;
     private String atualizado;
 
+    private WeatherAux weatherAux;
+    private WeatherHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_principal);
+
+        weatherAux = new WeatherAux("Covilhã");
 
         nome = (TextView) findViewById(R.id.login);
         //tempo = (TextView) findViewById(R.id.tempo);
@@ -137,6 +144,8 @@ public class AreaPrincipal extends Activity {
             Intent recebido = getIntent();
             nome.setText(recebido.getStringExtra("nome"));
             turma = recebido.getStringExtra("turma");
+
+            User user = new User(recebido.getStringExtra("nome"),recebido.getStringExtra("turma"));
         }
 
         catch(Exception e){}
@@ -196,54 +205,81 @@ public class AreaPrincipal extends Activity {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.sol);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.sol);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.nublado);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_forte")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_forte);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.nublado_forte);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_chuva);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.nublado_chuva);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.neve);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.neve);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.noite);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_nublado);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.noite_nublado);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_chuva);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.noite_chuva);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_neve);
                                             imagem_principal.setImageDrawable(icone_aux_draw);
+                                            imagem_principal.setTag(R.drawable.noite_neve);
+
+                                            weatherAux.setFirst_id((int)imagem_principal.getTag());
                                         }
 
                                         // segundo icone
@@ -257,54 +293,81 @@ public class AreaPrincipal extends Activity {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.sol);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.sol);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.nublado);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_forte")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_forte);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.nublado_forte);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_chuva);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.nublado_chuva);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.neve);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.neve);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.noite);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_nublado);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.noite_nublado);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_chuva);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.noite_chuva);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_neve);
                                             linear2_imagem.setImageDrawable(icone_aux_draw);
+                                            linear2_imagem.setTag(R.drawable.noite_neve);
+
+                                            weatherAux.setFirst_id((int)linear2_imagem.getTag());
                                         }
 
                                         // terceiro icone
@@ -318,54 +381,81 @@ public class AreaPrincipal extends Activity {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.sol);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.sol);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.nublado);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_forte")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_forte);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.nublado_forte);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_chuva);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.nublado_chuva);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.neve);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.neve);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.noite);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_nublado);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.noite_nublado);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_chuva);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.noite_chuva);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_neve);
                                             linear3_imagem.setImageDrawable(icone_aux_draw);
+                                            linear3_imagem.setTag(R.drawable.noite_neve);
+
+                                            weatherAux.setFirst_id((int)linear3_imagem.getTag());
                                         }
 
                                         // quarto e último icone
@@ -379,54 +469,81 @@ public class AreaPrincipal extends Activity {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.sol);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.sol);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.nublado);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_forte")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_forte);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.nublado_forte);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("nublado_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.nublado_chuva);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.nublado_chuva);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.neve);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.neve);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.noite);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_nublado")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_nublado);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.noite_nublado);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_chuva")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_chuva);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.noite_chuva);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         else if(icone_aux.equals("noite_neve")) {
 
                                             icone_aux_draw = getResources().getDrawable(R.drawable.noite_neve);
                                             linear4_imagem.setImageDrawable(icone_aux_draw);
+                                            linear4_imagem.setTag(R.drawable.noite_neve);
+
+                                            weatherAux.setFirst_id((int)linear4_imagem.getTag());
                                         }
 
                                         return;
@@ -458,6 +575,7 @@ public class AreaPrincipal extends Activity {
                                 String aux[] = dados.result.split("\"DateTime\":\"");
                                 String aux3[] = dados.result.split("\"Value\":");
                                 String aux5[] = dados.result.split("\"IconPhrase\":\"");
+
                                 String aux2 = "";
                                 String final_aux = "";
                                 String aux4 = "";
@@ -499,6 +617,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.sol);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.sol);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -510,6 +638,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.nublado);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.nublado);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -521,6 +659,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.nublado_forte);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.nublado_forte);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -532,6 +680,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.nublado_chuva);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.nublado_chuva);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -543,6 +701,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.neve);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.neve);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -559,6 +727,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.noite);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.noite);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -570,6 +748,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.noite_nublado);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.noite_nublado);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -581,6 +769,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.noite_chuva);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.noite_chuva);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
@@ -592,6 +790,16 @@ public class AreaPrincipal extends Activity {
 
                                                     icone = getResources().getDrawable(R.drawable.noite_neve);
                                                     editar.setImageDrawable(icone);
+                                                    editar.setTag(R.drawable.noite_neve);
+
+                                                    if(interno==0)
+                                                        weatherAux.setFirst_id((int)editar.getTag());
+                                                    else if(interno==1)
+                                                        weatherAux.setSecond_id((int)editar.getTag());
+                                                    else if(interno==2)
+                                                        weatherAux.setThird_id((int)editar.getTag());
+                                                    else if(interno==3)
+                                                        weatherAux.setForth_id((int)editar.getTag());
 
                                                     // guardar nas shared preferences
                                                     SharedPreferences.Editor editor = pref.edit();
